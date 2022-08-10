@@ -1,21 +1,19 @@
-import React from "react";
+import React, { Component } from "react";
 import ImageProduct from "./ImageProduct";
 import Price from "./Price";
 import TitleProduct from "./TitleProduct";
+import axios from "axios";
 
+function Product(props) {
+  return (
+    <div className="product">
+      <ImageProduct image={props.image} />
 
-function Product (){
-    return (
-        <div className='product'>
-          <ImageProduct src =  />
+      <TitleProduct title={props.title} description={props.url} />
 
-          <TitleProduct/>
-          <Price />
-
-
-        </div>
-    )
+      <Price price={props.price} />
+    </div>
+  );
 }
-
 
 export default Product;

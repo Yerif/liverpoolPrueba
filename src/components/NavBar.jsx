@@ -1,15 +1,21 @@
-import React from "react";
+import React, { Component } from "react";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 
-function NavBar (){
+class NavBar extends Component {
+  render() {
     return (
-        <nav className="navbar">
-            <Logo/>
-            <SearchBar placeholder = "Búsqueda"/>
-        </nav>
-    )
+      <nav className="navbar">
+        <Logo />
+        <SearchBar
+          api={this.props.api}
+          placeholder={this.props.placeholder}
+          action={this.props.action}
+          search={this.props.search}
+        />
+      </nav>
+    );
+  }
 }
 
-
-export default NavBar
+export default NavBar;
