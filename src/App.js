@@ -4,30 +4,39 @@ import Gallery from "./components/Gallery";
 import NavBar from "./components/NavBar";
 import SearchBar from "./components/SearchBar";
 import axios from "axios";
+import Footer from "./components/Footer";
+
+//componente app que será el componente que mantendra el estado de la aplicacion
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pokemons: [],
-      placeholder: "Buscar Pokemons",
+      //el primer arreglo se llena con los datos enviados por la api
+      characters: [],
+      placeholder: "Buscar",
       searchTerm: "",
     };
     this.handler = this.handler.bind(this);
   }
 
+  /* llamada a la api para obtener un arreglo de resultados el cual se hace mediante la libreria axios, tambien se puede 
+  utilizar fetch */
+
   componentDidMount() {
     axios
-      .get("https://pokeapi.co/api/v2/pokemon/?limit=150")
+      .get("https://swapi.dev/api/people")
       .then((res) => {
-        const pokemons = res.data.results;
-        this.setState({ pokemons });
-        console.log(pokemons);
+        const characters = res.data.results;
+        this.setState({ characters });
+        console.log(characters);
       })
       .catch((error) => {
         console.warn("Error", error);
       });
   }
+
+  //funcion para actualizar y manipular el estado de la clase app
 
   handler(term) {
     this.setState({ searchTerm: term });
@@ -37,12 +46,14 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar
-          api={this.state.pokemons}
+          api={this.state.characters}
           search={this.state.searchTerm}
           action={this.handler}
           placeholder={this.state.placeholder}
         />
-        <Gallery api={this.state.pokemons} />
+        <h2 className="subtitle">Lista de personajes</h2>
+        <Gallery search={this.state.searchTerm} api={this.state.characters} />
+        <Footer />
       </div>
     );
   }

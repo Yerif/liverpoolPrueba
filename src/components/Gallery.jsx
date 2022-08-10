@@ -3,28 +3,47 @@ import React, { Component } from "react";
 import NavBar from "./NavBar";
 import Product from "./Product";
 
+//componente clase que despliega la galeria de productos
+
 class Gallery extends Component {
   constructor(props) {
     super(props);
   }
 
-  createProduct(pokemon) {
+  //funcion para crear el componente que mostrara el producto con su información.
+
+  createProduct(character) {
     return (
       <Product
-        key={pokemon.name}
-        image={
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.yhCYwpeKOucdN1LaFmijvgAAAA%26pid%3DApi&f=1"
-        }
-        url={pokemon.url}
-        title={pokemon.name}
-        price="$3,000"
+        key={character.name}
+        image={`./images/${character.name}`}
+        hair={character.hair_color}
+        gender={character.gender}
+        birthyear={character.birth_year}
+        title={character.name}
+        price={character.mass}
+        height={character.height}
       />
     );
   }
 
   render() {
     return (
-      <div className="gallery">{this.props.api.map(this.createProduct)}</div>
+      //desplegar todos los productos utilizando la api mediante el metodo map
+      <div className="gallery">
+        {this.props.api
+          .filter((val) => {
+            const search = this.props.search;
+            if (search == "") {
+              return val;
+            } else if (val.name.toLowerCase().includes(search.toLowerCase())) {
+              //se utiliza search para llegar al estado del componente padre
+              console.log(val);
+              return val;
+            }
+          })
+          .map(this.createProduct)}
+      </div>
     );
   }
 }
